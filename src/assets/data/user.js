@@ -1,4 +1,5 @@
 
+
 const users = [
   {
     id: 1,
@@ -6,7 +7,7 @@ const users = [
     lastName: "Stepnov",
     phoneNumber: "123-456-7890",
     email: "eugene.stepnov@example.com",
-    avatar: "/assets/image.png",
+    avatar: '/assets/image.png',
   }
 ]
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Userprofile.css";
-import users from "../../assets/data/user.js";
-import { product } from "../../assets/data/product.js";
+import users from "../../assets/data/user";
+import orders from "../../assets/data/orders";
 
 const UserProfile = () => {
   const defaultUser = users[0];
@@ -122,42 +122,48 @@ const UserProfile = () => {
         {activeTab === "orders" && (
           <div className="orders-content">
             <h2>Đơn hàng</h2>
-            <table className="order-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Category</th>
-                  <th>Order Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {product.map((product) => (
-                  <tr key={product.id}>
-                    <td>{product.id}</td>
-                    <td>
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="order-item-image"
-                      />
-                    </td>
-                    <td>{product.name}</td>
-                    <td>{product.price}</td>
-                    <td>{product.category}</td>
-                    <td>
-                      {new Date(
-                        Date.now() - Math.floor(Math.random() * 1e10)
-                      ).toLocaleDateString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {orders.map((order, index) => (
+              <div key={index} className="order-card">
+                <h3>Đơn hàng #{index + 1}</h3>
+                <p><strong>User ID:</strong> {order.userId}</p>
+                <p><strong>Total Price:</strong> ${order.totalPrice}</p>
+                <p><strong>Order Date:</strong> {new Date(order.createdAt).toLocaleDateString()}</p>
+                <p><strong>Status:</strong> {order.status}</p>
+
+                <h4>Sản phẩm:</h4>
+                <table className="order-table">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {order.products.map((product) => (
+                      <tr key={product.id}>
+                        <td>
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="order-item-image"
+                          />
+                        </td>
+                        <td>{product.name}</td>
+                        <td>${product.price}</td>
+                        <td>{product.category}</td>
+                        <td>{product.quantity}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
           </div>
         )}
+
 
         {activeTab === "edit" && (
           <div className="profile-form">
